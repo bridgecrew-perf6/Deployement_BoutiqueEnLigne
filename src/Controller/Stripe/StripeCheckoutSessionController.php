@@ -27,7 +27,7 @@ class StripeCheckoutSessionController extends AbstractController
       }
 
       $order = $orderServices->createOrder($cart);
-      Stripe::setApiKey('sk_test_51KUy6uKXwUlKHdat1Df6AdwaJxnaepB9sz3S6WW2Mw27R0PjAh7P50Ax7WWMfQOCH71soPne13Gep9fk1nkogzIV008MPfHZtd');
+      Stripe::setApiKey($_ENV['SP_APIKEY_PRIVATE']);
 
       $checkout_session = Session::create([
           'customer_email' => $user->getEmail(),

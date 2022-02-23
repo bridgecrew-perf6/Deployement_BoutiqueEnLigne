@@ -98,6 +98,7 @@ class CheckoutController extends AbstractController
                 'carrier' => $carrier,
                 'informations' => $information,
                 'reference' => $reference,
+                'apikeypublic' => $_ENV['SP_APIKEY_PUBLIC'],
                 'checkout' => $form->createView()
             ]);
         }

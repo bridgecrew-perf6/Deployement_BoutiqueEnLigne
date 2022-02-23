@@ -13,7 +13,6 @@
 
 <div class="section checkout">
 	<div class="container">
-    
         <div class="row">
         	<div class="col-md-6">
                 <div class="heading_s1">
@@ -102,7 +101,7 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-        var stripe = Stripe("pk_test_51KUy6uKXwUlKHdatusRzOwA97hK0doEwmSH94qUFMRvAzfHbn0f7oX5vubMs5x8eAZAmXZolNLolpNkZHI2ArkaC00NHtMTFCb");
+        var stripe = Stripe("{{ apikeypublic }}");
     var checkoutButton = document.getElementById("checkout-button");
 
     checkoutButton.addEventListener("click", function () {
