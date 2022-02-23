@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block title %} BoutiqueEnLigne Shopping ! {% endblock %}
+
+{% block body %}
+{{ include ("partials/title_section.html.twig", {'name':'Shop'}) }}
+<div class="section">
+	<div class="container">
+    	<div class="row">
+			<div class="col-lg-9">
+                <div class="row shop_container">
+                {% if not products %}
+                    <p>Sorry. NO product matches your search results !</p>
+                {% endif %}
+                    {% for product in products %}
+                        <div class="col-lg-4 col-md-4 col-6">
+                            <div class="product">
+                                <div class="product_img">
+                                    <a href="">
+                                        <img height="250" src="/assets/uploads/products/{{product.image}}" alt="{{ product.name }}">
+                                    </a>
+                                    <div class="product_action_box">
+                                        <ul class="list_none pr_action_btn">
+                                            <li class="add-to-cart">
+                                                <a href="{{path('cart_add',{'id':product.id})}}">
+                                                    <i class="icon-basket-loaded"></i>
+                                                    Add To Cart</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="">
+                                                    <i class="icon-shuffle"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('product_details', {'slug': product.slug })}}" class="">
+                                                    <i class="icon-magnifier-add"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="icon-heart"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product_info">
+                                    <h6 class="product_title">
+                                        <a href="">{{ product.name }}</a>
+                                    </h6>
+                                    <div class="product_price">
+                                        <span class="price">{{ product.price/100}}</span>
+                                        <del>{{product.price*1.35/100}}</del>
+                                        <div class="on_sale">
+                                            <span>35% Off</span>
+                                        </div>
+                                    </div>
+                                    <div class="rating_wrap">
+                                        <div class="rating">
+                                            <div class="product_rate" style="width:80%"></div>
+                                        </div>
+                                        <span class="rating_num">{{ product.reviewsProducts | length }}</span>
+                                    </div>
+                                    <div class="pr_desc">
+                                        <p>{{ product.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %} 
+                </div>
+        	</div>
+          <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+            	<div class="sidebar">
+                    {{ form_start(search) }}
+                	<div class="widget">
+                        <h5 class="widget_title">Categories</h5>
+                        {{ form_row(search.categories)}}
+                    </div>
+                    <div class="widget">
+                    	<h5 class="widget_title">Price</h5>
+                        <div class="form-row">
+                            <div class="col-md-6">{{ form_row(search.minprice)}}</div>
+                            <div class="col-md-6">{{ form_row(search.maxprice)}}</div>
+                        </div>
+                    </div>
+                    <div class="widget">
+                    	<h5 class="widget_title">Tags</h5>
+                        {{ form_row(search.tags)}}
+                    </div>
+                    <button class="btn btn-border-fill btn-block"> Search</button>
+                    {{ form_end(search) }}
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('.js-categories-multiple').select2();
+        });
+    </script>
+{% endblock %}

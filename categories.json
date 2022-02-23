@@ -1,0 +1,1 @@
+[{"stmt":"SELECT * FROM categories;","header":["id","name","description","image"],"rows":[["1","Homme","NULL","NULL"],["2","Femme","NULL","NULL"],["3","Bonnet","NULL","NULL"],["4","Bijou","NULL","NULL"],["5","Montre","NULL","NULL"],["6","portable","NULL","NULL"]]}]
