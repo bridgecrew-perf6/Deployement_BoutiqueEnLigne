@@ -21,7 +21,7 @@ class SearchProductType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'attr' =>[
-                    'class' => 'js-categories-multiple'
+                    'class' => 'js-categories-multiple form-control'
                 ]
             ])
 

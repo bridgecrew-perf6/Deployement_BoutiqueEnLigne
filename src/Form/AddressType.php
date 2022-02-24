@@ -20,7 +20,11 @@ class AddressType extends AbstractType
             ->add('phone')
             ->add('city')
             ->add('codePostal')
-            ->add('country', CountryType::class)
+            ->add('country', CountryType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         
         ;
     }
