@@ -45,7 +45,9 @@
                 	<div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
                         <div class="row shop_container">
                            {% for product in productNewArrival %}
+                            <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
+                            </div>
                            {% endfor %} 
 
                         </div>
@@ -53,7 +55,9 @@
                     <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
                         <div class="row shop_container">
                             {% for product in productBestSeller %}
+                            <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
+                            </div>
                            {% endfor %} 
 
                         </div>
@@ -61,7 +65,9 @@
                     <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
                         <div class="row shop_container">
                             {% for product in productFeatured %}
+                            <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
+                            </div>
                            {% endfor %} 
 
                         </div>
@@ -69,7 +75,9 @@
                     <div class="tab-pane fade" id="specialOffer" role="tabpanel" aria-labelledby="specialOffer-tab">
                         <div class="row shop_container">
                             {% for product in productSpecialOffer %}
+                            <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
+                            </div>
                            {% endfor %} 
 
                         </div>
