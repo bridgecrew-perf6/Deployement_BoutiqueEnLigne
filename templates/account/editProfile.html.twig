@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil
+{% endblock %}
+
+{% block body %}
+
+	{{ include ("partials/title_section.html.twig", {'name':'Modification du profil'}) }}
+	<div class="login_register_wrap section">
+		<div class="container">
+			<div class="message-flash">
+				{% for message in app.flashes('account_message') %}
+					<div class="alert alert-success" role="alert">{{ message }}</div>
+				{% endfor %}
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-xl-6 col-md-10">
+					<div class="login_wrap">
+						<div class="padding_eight_all bg-white">
+							<div class="content">
+								<p><strong>Modification du profil de : </srtong>{{app.user.fullName}}</p>
+								{{ form_start(form) }}
+								<div class="form-group">
+									{{ form_row(form.username) }}
+								</div>
+								<div class="form-row">
+									<div class="col-md-6">{{ form_row(form.firstname) }}</div>
+									<div class="col-md-6">{{ form_row(form.lastname) }}</div>
+								</div>
+                                <div class="form-group">
+									<button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Valider</button>
+                                    <a href="{{path('account')}}" class="btn btn-fill-out">Retour au tableau de bord</a>
+								</div>
+								{{ form_end(form) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

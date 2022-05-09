@@ -1,0 +1,51 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du mot de passe{% endblock %}
+
+{% block body %}
+
+{{ include ("partials/title_section.html.twig", {'name':'Modification du mot de passe'}) }}
+    <div class="login_register_wrap section">
+        <div class="container">
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+		{% endfor %}
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-10">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all bg-white">
+                            <div class="content">
+                                <p><strong>Modification du mot de passe de : </strong>{{app.user.fullName}}</p>
+									<form method="post">
+                                        <div class="form-group col-md-12">
+                                            <label>Nouveau mot de passe :
+                                                <span class="required">*</span>
+                                            </label>
+                                            <input required="" class="form-control" id="pass" name="pass" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Confirmer le mot de passe :
+                                                <span class="required">*</span>
+                                            </label>
+                                            <input required="" class="form-control" id="pass2" name="pass2" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+												<button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Valider</button>
+                                                <a href="{{path('account')}}" class="btn btn-fill-out">Retour au tableau de board</a>
+										</div>
+                                        
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
