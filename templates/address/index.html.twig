@@ -9,15 +9,15 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>FullName</th>
-                <th>Campany</th>
-                <th>Address</th>
+                <th>Nom et Prénom</th>
+                <th>Société</th>
+                <th>Adresse</th>
                 <th>Complement</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>CodePostal</th>
-                <th>Country</th>
-                <th>actions</th>
+                <th>Téléphone</th>
+                <th>Ville</th>
+                <th>Code Postal</th>
+                <th>Pays</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -34,17 +34,17 @@
                 <td>{{ address.country }}</td>
 
                 <td>
-                    <a href="{{ path('address_show', {'id': address.id}) }}">show</a>
-                    <a href="{{ path('address_edit', {'id': address.id}) }}">edit</a>
+                    <a href="{{ path('address_show', {'id': address.id}) }}">Voir</a>
+                    <a href="{{ path('address_edit', {'id': address.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('address_new') }}">Create new</a>
+    <a href="{{ path('address_new') }}">Créer un nouveau</a>
 {% endblock %}

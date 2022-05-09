@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}réinitialiser votre mot de passe{% endblock %}
 
 {% block body %}
 
@@ -17,10 +17,10 @@
                             <div class="content">
                                 {{ form_start(resetForm) }}
                                     {{ form_row(resetForm.plainPassword) }}
-                                    <button class="btn btn-fill-out btn-block">Reset password</button>
+                                    <button class="btn btn-fill-out btn-block">réinitialiser votre mot de passe</button>
                                 {{ form_end(resetForm) }}
                             </div>
-                            <div class="form-note text-center">Don't Have an Account? <a href="{{ path('app_register')}}">Sign up now</a></div>
+                            <div class="form-note text-center">Vous n'avez pas de compte ?<a href="{{ path('app_register')}}">S'inscrire maintenant</a></div>
                         </div>
                     </div>
                 </div>
@@ -28,3 +28,4 @@
         </div>
     </div>
 {% endblock %}
+

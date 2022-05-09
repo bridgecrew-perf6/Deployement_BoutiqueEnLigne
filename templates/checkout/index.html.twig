@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Checkout BoutiqueEnLigne !{% endblock %}
+{% block title %}Vérification BoutiqueEnLigne !{% endblock %}
 
 {% block body %}
 
-{{ include ("partials/title_section.html.twig", {'name':'Checkout'}) }}
+{{ include ("partials/title_section.html.twig", {'name':'Vérification'}) }}
 
 <div class="section checkout">
 	<div class="container">
@@ -12,21 +12,21 @@
         <div class="row">
         	<div class="col-md-6">
                 <div class="heading_s1">
-                        <h4>Your delivery Address</h4>
+                        <h4>Votre adresse de livraison</h4>
                         <div class="content">
                             {{ form_widget(checkout.address) | replace({'[spr]' : '<br>'}) | raw }}
                         </div>
-                        <a  href="{{ path('address_new') }}" class="btn btn-border-fill btn-block mt-2">Add new address</a>
+                        <a  href="{{ path('address_new') }}" class="btn btn-border-fill btn-block mt-2">Ajouter une nouvelle Adresse</a>
                 </div>
                 <div class="heading_s1">
-                    <h4>Your transporter</h4>
+                    <h4>Votre Livreur</h4>
                     <div class="content">
                         {{ form_widget(checkout.carrier) | replace({'[spr]' : '<br>'}) | raw  }}
 
                     </div>
                 </div>
                 <div class="heading_s1">
-                    <h4>Additional information</h4>
+                    <h4>Informations Complémentaires</h4>
                     <div class="form-group mb-0">
                         {{ form_widget(checkout.informations) }}
                     </div>
@@ -36,13 +36,13 @@
           <div class="col-md-6">
                 <div class="order_review">
                     <div class="heading_s1">
-                        <h4>Your Orders</h4>
+                        <h4>Votre Commande</h4>
                     </div>
                     <div class="table-responsive order_table">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Product</th>
+                                    <th>Produit</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -50,33 +50,33 @@
                                 {% for element in cart.products %}
                                     <tr>
                                         <td> {{ element.product.name }} <span class="product-qty">{{element.quantity}}</span></td>
-                                        <td>{{ element.product.price/100}}</td>
+                                        <td>{{ element.product.price/100 * element.quantity}} €</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>SubTotal HT</th>
-                                    <td class="product-subtotal">{{ cart.data.subTotalHT }}</td>
+                                    <th>Total HT</th>
+                                    <td class="product-subtotal">{{ cart.data.subTotalHT }} €</td>
                                 </tr>
                                 <tr>
                                     <th>Taxe</th>
-                                    <td class="product-subtotal">{{ cart.data.Taxe }}</td>
+                                    <td class="product-subtotal">{{ cart.data.Taxe }} €</td>
                                 </tr>
                                 <tr>
-                                    <th>Total</th>
-                                    <td class="product-subtotal">{{ cart.data.subTotalTTC }}</td>
+                                    <th>Total TTC</th>
+                                    <td class="product-subtotal">{{ cart.data.subTotalTTC }} €</td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                     <div class="payment_method">
                         <div class="heading_s1">
-                            <h4>Payment</h4>
+                            <h4>Paiement</h4>
                         </div>
 
                     </div>
-                    <button type="submit" id="checkout-button" class="btn btn-fill-out btn-block">Place Order</button>
+                    <button type="submit" id="checkout-button" class="btn btn-fill-out btn-block">Passer la commande</button>
                 </div>
           </div>
         </div>

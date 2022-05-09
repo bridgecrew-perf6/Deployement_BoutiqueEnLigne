@@ -18,7 +18,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6">
             	<div class="heading_s1 text-center">
-                	<h2>Exclusive Products</h2>
+                	<h2>Produits exclusifs</h2>
                 </div>
             </div>
 		</div>
@@ -27,16 +27,16 @@
             	<div class="tab-style1">
                     <ul class="nav nav-tabs justify-content-center" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="arrival" aria-selected="true">New Arrival</a>
+                            <a class="nav-link active" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="arrival" aria-selected="true">Nouvelles arrivées</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">Best Sellers</a>
+                            <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">Meilleures ventes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="featured-tab" data-toggle="tab" href="#featured" role="tab" aria-controls="featured" aria-selected="false">Featured</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="specialOffer-tab" data-toggle="tab" href="#specialOffer" role="tab" aria-controls="specialOffer" aria-selected="false">Special Offer</a>
+                            <a class="nav-link" id="specialOffer-tab" data-toggle="tab" href="#specialOffer" role="tab" aria-controls="specialOffer" aria-selected="false">Offre spéciale</a>
                         </li>
 
                     </ul>
@@ -45,9 +45,11 @@
                 	<div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
                         <div class="row shop_container">
                            {% for product in productNewArrival %}
+                                {% if product.quantity > 0 %}
                             <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
                             </div>
+                                {% endif %}     
                            {% endfor %} 
 
                         </div>
@@ -55,9 +57,11 @@
                     <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
                         <div class="row shop_container">
                             {% for product in productBestSeller %}
+                                {% if product.quantity > 0 %}
                             <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
                             </div>
+                                {% endif %}
                            {% endfor %} 
 
                         </div>
@@ -65,9 +69,11 @@
                     <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
                         <div class="row shop_container">
                             {% for product in productFeatured %}
+                                {% if product.quantity > 0 %}
                             <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
                             </div>
+                                {% endif %}
                            {% endfor %} 
 
                         </div>
@@ -75,15 +81,16 @@
                     <div class="tab-pane fade" id="specialOffer" role="tabpanel" aria-labelledby="specialOffer-tab">
                         <div class="row shop_container">
                             {% for product in productSpecialOffer %}
+                                {% if product.quantity > 0 %}
                             <div class="col-lg-3 col-md-4 col-6">
                                {{ include('partials/product.html.twig',{'product': product}) }}
                             </div>
+                                {% endif %}
                            {% endfor %} 
 
                         </div>
                     </div>
-
-
+                
                 </div>
             </div>
         </div>

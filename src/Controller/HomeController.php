@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Product;
 use App\Entity\SearchProduct;
+use App\Form\CommentsType;
 use App\Form\SearchProductType;
 use App\Repository\HomeSliderRepository;
 use App\Repository\ProductRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,14 +46,46 @@ class HomeController extends AbstractController
     /**
      * @Route("/product/{slug}", name="product_details")
      */
-    public function show(?Product $product):Response 
+    public function show(?Product $product, Request $request, EntityManagerInterface $manager):Response 
     {
         if(!$product){
             return $this->redirectToRoute('home');
         }
 
+        //on crée le commentaire
+        $comment = new Comments;
+
+        //on génère le formulaire
+        $form = $this->createForm(CommentsType::class, $comment);
+        $form->handleRequest($request);
+
+        // Traitement du formulaire
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new DateTime());
+            $comment->setProduct($product);
+
+            //on récupère le contenu du champ parentid
+            $parentid = $form->get("parentid")->getData();
+
+            //on va chercher le commentaire correspondant
+            if($parentid != null){
+                $parent = $manager->getRepository(Comments::class)->find($parentid);
+            }
+            
+
+            // on définit le parent
+            $comment->setParent($parent ?? null);
+    
+            $manager->persist($comment);
+            $manager->flush();
+            
+            $this->addFlash('message','Votre commentaire a bien été envoyé');
+            return $this->redirectToRoute('product_details', ['slug' => $product->getSlug()]);
+        }
+
         return $this->render("home/single_product.html.twig",[
-            'product' => $product
+            'product' => $product,
+            'form' => $form->createView()
         ]);
     }
 

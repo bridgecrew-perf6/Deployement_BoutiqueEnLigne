@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220220182514 extends AbstractMigration
+final class Version20220509091814 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,9 @@ final class Version20220220182514 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE comments (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, product_id INTEGER NOT NULL, parent_id INTEGER DEFAULT NULL, content CLOB NOT NULL, active BOOLEAN NOT NULL, email VARCHAR(255) NOT NULL, username VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, rgpd BOOLEAN NOT NULL, note INTEGER DEFAULT NULL)');
+        $this->addSql('CREATE INDEX IDX_5F9E962A4584665A ON comments (product_id)');
+        $this->addSql('CREATE INDEX IDX_5F9E962A727ACA70 ON comments (parent_id)');
         $this->addSql('DROP INDEX IDX_AB912789A76ED395');
         $this->addSql('CREATE TEMPORARY TABLE __temp__Cart AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM Cart');
         $this->addSql('DROP TABLE Cart');
@@ -42,10 +45,10 @@ final class Version20220220182514 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__cart_details');
         $this->addSql('CREATE INDEX IDX_89FCC38DBCB5C6F5 ON cart_details (carts_id)');
         $this->addSql('DROP INDEX IDX_F5299398A76ED395');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__order AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM "order"');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__order AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id FROM "order"');
         $this->addSql('DROP TABLE "order"');
-        $this->addSql('CREATE TABLE "order" (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, reference VARCHAR(255) NOT NULL, full_name VARCHAR(255) NOT NULL, carrier_name VARCHAR(255) NOT NULL, carrier_price DOUBLE PRECISION NOT NULL, delivery_address CLOB NOT NULL, is_paid BOOLEAN NOT NULL, more_informations CLOB DEFAULT NULL, created_at DATETIME NOT NULL, quantity INTEGER NOT NULL, sub_total_ht DOUBLE PRECISION NOT NULL, taxe DOUBLE PRECISION NOT NULL, sub_total_ttc DOUBLE PRECISION NOT NULL, CONSTRAINT FK_F5299398A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO "order" (id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc) SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM __temp__order');
+        $this->addSql('CREATE TABLE "order" (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, reference VARCHAR(255) NOT NULL, full_name VARCHAR(255) NOT NULL, carrier_name VARCHAR(255) NOT NULL, carrier_price DOUBLE PRECISION NOT NULL, delivery_address CLOB NOT NULL, is_paid BOOLEAN NOT NULL, more_informations CLOB DEFAULT NULL, created_at DATETIME NOT NULL, quantity INTEGER NOT NULL, sub_total_ht DOUBLE PRECISION NOT NULL, taxe DOUBLE PRECISION NOT NULL, sub_total_ttc DOUBLE PRECISION NOT NULL, stripe_checkout_session_id VARCHAR(255) DEFAULT NULL, CONSTRAINT FK_F5299398A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO "order" (id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id) SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id FROM __temp__order');
         $this->addSql('DROP TABLE __temp__order');
         $this->addSql('CREATE INDEX IDX_F5299398A76ED395 ON "order" (user_id)');
         $this->addSql('DROP INDEX IDX_845CA2C1CFFE9AD6');
@@ -55,15 +58,15 @@ final class Version20220220182514 extends AbstractMigration
         $this->addSql('INSERT INTO order_details (id, orders_id, product_name, product_price, quantity, sub_total_ht, taxe, sub_total_ttc) SELECT id, orders_id, product_name, product_price, quantity, sub_total_ht, taxe, sub_total_ttc FROM __temp__order_details');
         $this->addSql('DROP TABLE __temp__order_details');
         $this->addSql('CREATE INDEX IDX_845CA2C1CFFE9AD6 ON order_details (orders_id)');
-        $this->addSql('DROP INDEX IDX_A9941943A21214B7');
         $this->addSql('DROP INDEX IDX_A99419434584665A');
+        $this->addSql('DROP INDEX IDX_A9941943A21214B7');
         $this->addSql('CREATE TEMPORARY TABLE __temp__product_categories AS SELECT product_id, categories_id FROM product_categories');
         $this->addSql('DROP TABLE product_categories');
         $this->addSql('CREATE TABLE product_categories (product_id INTEGER NOT NULL, categories_id INTEGER NOT NULL, PRIMARY KEY(product_id, categories_id), CONSTRAINT FK_A99419434584665A FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_A9941943A21214B7 FOREIGN KEY (categories_id) REFERENCES categories (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO product_categories (product_id, categories_id) SELECT product_id, categories_id FROM __temp__product_categories');
         $this->addSql('DROP TABLE __temp__product_categories');
-        $this->addSql('CREATE INDEX IDX_A9941943A21214B7 ON product_categories (categories_id)');
         $this->addSql('CREATE INDEX IDX_A99419434584665A ON product_categories (product_id)');
+        $this->addSql('CREATE INDEX IDX_A9941943A21214B7 ON product_categories (categories_id)');
         $this->addSql('DROP INDEX IDX_7CE748AA76ED395');
         $this->addSql('CREATE TEMPORARY TABLE __temp__reset_password_request AS SELECT id, user_id, selector, hashed_token, requested_at, expires_at FROM reset_password_request');
         $this->addSql('DROP TABLE reset_password_request');
@@ -73,20 +76,21 @@ final class Version20220220182514 extends AbstractMigration
         $this->addSql('INSERT INTO reset_password_request (id, user_id, selector, hashed_token, requested_at, expires_at) SELECT id, user_id, selector, hashed_token, requested_at, expires_at FROM __temp__reset_password_request');
         $this->addSql('DROP TABLE __temp__reset_password_request');
         $this->addSql('CREATE INDEX IDX_7CE748AA76ED395 ON reset_password_request (user_id)');
-        $this->addSql('DROP INDEX IDX_E0851D6C4584665A');
         $this->addSql('DROP INDEX IDX_E0851D6CA76ED395');
+        $this->addSql('DROP INDEX IDX_E0851D6C4584665A');
         $this->addSql('CREATE TEMPORARY TABLE __temp__reviews_product AS SELECT id, user_id, product_id, note, comment FROM reviews_product');
         $this->addSql('DROP TABLE reviews_product');
         $this->addSql('CREATE TABLE reviews_product (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER DEFAULT NULL, product_id INTEGER NOT NULL, note INTEGER NOT NULL, comment CLOB DEFAULT NULL, CONSTRAINT FK_E0851D6CA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_E0851D6C4584665A FOREIGN KEY (product_id) REFERENCES product (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO reviews_product (id, user_id, product_id, note, comment) SELECT id, user_id, product_id, note, comment FROM __temp__reviews_product');
         $this->addSql('DROP TABLE __temp__reviews_product');
-        $this->addSql('CREATE INDEX IDX_E0851D6C4584665A ON reviews_product (product_id)');
         $this->addSql('CREATE INDEX IDX_E0851D6CA76ED395 ON reviews_product (user_id)');
+        $this->addSql('CREATE INDEX IDX_E0851D6C4584665A ON reviews_product (product_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP TABLE comments');
         $this->addSql('DROP INDEX IDX_AB912789A76ED395');
         $this->addSql('CREATE TEMPORARY TABLE __temp__Cart AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM "Cart"');
         $this->addSql('DROP TABLE "Cart"');
@@ -109,10 +113,10 @@ final class Version20220220182514 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__cart_details');
         $this->addSql('CREATE INDEX IDX_89FCC38DBCB5C6F5 ON cart_details (carts_id)');
         $this->addSql('DROP INDEX IDX_F5299398A76ED395');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__order AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM "order"');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__order AS SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id FROM "order"');
         $this->addSql('DROP TABLE "order"');
-        $this->addSql('CREATE TABLE "order" (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, reference VARCHAR(255) NOT NULL, full_name VARCHAR(255) NOT NULL, carrier_name VARCHAR(255) NOT NULL, carrier_price DOUBLE PRECISION NOT NULL, delivery_address CLOB NOT NULL, is_paid BOOLEAN NOT NULL, more_informations CLOB DEFAULT NULL, created_at DATETIME NOT NULL, quantity INTEGER NOT NULL, sub_total_ht DOUBLE PRECISION NOT NULL, taxe DOUBLE PRECISION NOT NULL, sub_total_ttc DOUBLE PRECISION NOT NULL, stripe_checkout_session_id INTEGER DEFAULT NULL)');
-        $this->addSql('INSERT INTO "order" (id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc) SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc FROM __temp__order');
+        $this->addSql('CREATE TABLE "order" (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER NOT NULL, reference VARCHAR(255) NOT NULL, full_name VARCHAR(255) NOT NULL, carrier_name VARCHAR(255) NOT NULL, carrier_price DOUBLE PRECISION NOT NULL, delivery_address CLOB NOT NULL, is_paid BOOLEAN NOT NULL, more_informations CLOB DEFAULT NULL, created_at DATETIME NOT NULL, quantity INTEGER NOT NULL, sub_total_ht DOUBLE PRECISION NOT NULL, taxe DOUBLE PRECISION NOT NULL, sub_total_ttc DOUBLE PRECISION NOT NULL, stripe_checkout_session_id VARCHAR(255) DEFAULT NULL)');
+        $this->addSql('INSERT INTO "order" (id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id) SELECT id, user_id, reference, full_name, carrier_name, carrier_price, delivery_address, is_paid, more_informations, created_at, quantity, sub_total_ht, taxe, sub_total_ttc, stripe_checkout_session_id FROM __temp__order');
         $this->addSql('DROP TABLE __temp__order');
         $this->addSql('CREATE INDEX IDX_F5299398A76ED395 ON "order" (user_id)');
         $this->addSql('DROP INDEX IDX_845CA2C1CFFE9AD6');

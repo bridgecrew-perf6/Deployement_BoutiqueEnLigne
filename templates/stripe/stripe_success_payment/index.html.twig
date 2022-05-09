@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Order Completed !{% endblock %}
+{% block title %}Commande terminée !{% endblock %}
 
 {% block body %}
 {{ include ("partials/title_section.html.twig", {'name':'Order Completed '}) }}
@@ -12,16 +12,16 @@
                 <div class="text-center order_complete">
                 	<i class="fas fa-check-circle"></i>
                     <div class="heading_s1">
-                      <h3>Thank you {{ order.user.firstname }} {{ order.user.lastname }}. Payment made successfully !</h3>
+                      <h3>Merci {{ order.user.firstname }} {{ order.user.lastname }}. Paiement effectué avec succès!</h3>
                       <div class="">
-                        <div>Payment for order number <strong>{{ order.reference }}</strong>  has been accepted.</div>
-                        <div>Your payment is currently “pending verification”.
-                            Payments are usually verified within 1 hour.
-                            After verification, the seller begins to process your order.
-                            During this lapse of time, you will not be able to change your order.</div>
+                        <div>Paiement pour le numéro de commande <strong>{{ order.reference }}</strong> a été accepté.</div>
+                        <div>Votre paiement est actuellement "en attente de vérification".
+                            Les paiements sont généralement vérifiés dans l'heure qui suit.
+                            Après vérification, le vendeur commence à traiter votre commande.
+                            Pendant ce laps de temps, vous ne pourrez pas modifier votre commande..</div>
                         <div>
-                          <div>Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You will receive an email confirmation when your order is completed.</div>
-                          <a href="{{path('home')}}" class="btn btn-fill-out">Continue Shopping</a>
+                          <div>Nous vous remercions de votre commande! Votre commande est en cours de traitement et sera complétée dans les 3 à 6 heures. Vous recevrez un e-mail de confirmation lorsque votre commande sera terminée.</div>
+                          <a href="{{path('home')}}" class="btn btn-fill-out">Continuer vos achats</a>
                         </div>
                       </div>
                       <div >

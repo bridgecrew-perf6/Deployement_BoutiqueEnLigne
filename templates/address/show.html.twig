@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Address{% endblock %}
+{% block title %}Adresse{% endblock %}
 
 {% block body %}
-    <h1>Address</h1>
+    <h1>Adresse</h1>
 
     <table class="table">
         <tbody>
@@ -12,15 +12,15 @@
                 <td>{{ address.id }}</td>
             </tr>
             <tr>
-                <th>FullName</th>
+                <th>Nom et Pénom</th>
                 <td>{{ address.fullName }}</td>
             </tr>
             <tr>
-                <th>Campany</th>
+                <th>Société</th>
                 <td>{{ address.campany }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th>Adresse</th>
                 <td>{{ address.address }}</td>
             </tr>
             <tr>
@@ -28,27 +28,27 @@
                 <td>{{ address.complement }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Téléphone</th>
                 <td>{{ address.phone }}</td>
             </tr>
             <tr>
-                <th>City</th>
+                <th>Ville</th>
                 <td>{{ address.city }}</td>
             </tr>
             <tr>
-                <th>CodePostal</th>
+                <th>Code Postal</th>
                 <td>{{ address.codePostal }}</td>
             </tr>
             <tr>
-                <th>Country</th>
+                <th>Pays</th>
                 <td>{{ address.country }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('address_index') }}">back to list</a>
+    <a href="{{ path('address_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('address_edit', {'id': address.id}) }}">edit</a>
+    <a href="{{ path('address_edit', {'id': address.id}) }}">Modifier</a>
 
     {{ include('address/_delete_form.html.twig') }}
 {% endblock %}
