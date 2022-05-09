@@ -71,11 +71,6 @@ class Product
 
 
     /**
-     * @ORM\OneToMany(targetEntity=ReviewsProduct::class, mappedBy="product")
-     */
-    private $reviewsProducts;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $quantity;
@@ -95,12 +90,17 @@ class Product
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->tagsProducts = new ArrayCollection();
-        $this->reviewsProducts = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,35 +240,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|ReviewsProduct[]
-     */
-    public function getReviewsProducts(): Collection
-    {
-        return $this->reviewsProducts;
-    }
-
-    public function addReviewsProduct(ReviewsProduct $reviewsProduct): self
-    {
-        if (!$this->reviewsProducts->contains($reviewsProduct)) {
-            $this->reviewsProducts[] = $reviewsProduct;
-            $reviewsProduct->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReviewsProduct(ReviewsProduct $reviewsProduct): self
-    {
-        if ($this->reviewsProducts->removeElement($reviewsProduct)) {
-            // set the owning side to null (unless already changed)
-            if ($reviewsProduct->getProduct() === $this) {
-                $reviewsProduct->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function __toString()
     {
@@ -319,6 +290,36 @@ class Product
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getProduct() === $this) {
+                $comment->setProduct(null);
+            }
+        }
 
         return $this;
     }
