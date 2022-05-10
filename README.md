@@ -1,6 +1,6 @@
 # BoutiqueEnLigne
 est un projet de E-commerce réalisé avec symfony 5.4 et Twig en integrant Stripe pour le paiement en ligne avec la carte bancaire. 
-Démarrage de serveur symfony avec la commande : symfony server:start
+Démarrage de serveur symfony avec la commande : <b>symfony server:start</b>
 
 - page d'accueil : Affiche des produits par catégorie.
 - formulaire d'inscription : permet à l'utilisateur de s'inscrire sur le site en renseignant les informations demandées.
